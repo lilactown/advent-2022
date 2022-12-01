@@ -30,43 +30,42 @@ Returns new list of partitions."
   "Partitions COLL by each occurrence of ELT."
   (remove (list elt) (partition-by (lambda (x) (equal elt x)) coll)))
 
+(defun sum (lst)
+  "Computes the sum of all elements of list LST."
+  (apply '+ lst))
+
 ;; (partition-by (lambda (x) x) '(1 1 1 2 2 2 3 3 4 5))
 ;; ((5) (4) (3 3) (2 2 2) (1 1 1))
 
 ;; (split-by 0 '(1 2 3 0 4 5 6 0 7 8 9 10))
 ;; ((10 9 8 7) (6 5 4) (3 2 1))
 
-(defun day1 (file-contents)
+(defun part1 (file-contents)
   "Find the Elf carrying the most Calories in FILE-CONTENTS.
 How many total Calories is that Elf carrying?"
   (let ((lines (mapcar #'string-to-number (split-string file-contents "\n"))))
-    (let ((partitions (split-by-elt 0 lines))) ; "" is mapped to 0
-      (seq-reduce
-       (lambda (max nums)
-         (let ((sum (apply '+ nums)))
-           (if (< max sum) sum max)))
-       partitions
-       0))))
+    (let ((sums (mapcar 'sum (split-by-elt 0 lines))))
+      (apply 'max sums)))) ; "" is mapped to 0
 
-;; (day1 (read-file-contents "example/day1"))
+;; (part1 (read-file-contents "example/day1"))
 ;; 24000
 
-(day1 (read-file-contents "input/day1"))
+(part1 (read-file-contents "input/day1"))
 
 66186
 
-(defun day2 (file-contents)
+(defun part2 (file-contents)
   "Find the top three Elves carrying the most Calories in FILE-CONTENTS.
 How many Calories are those Elves carrying in total?"
   (let ((lines (mapcar #'string-to-number (split-string file-contents "\n"))))
     (let ((partitions (split-by-elt 0 lines))) ; "" is mapped to 0
-      (let ((sums (mapcar (lambda (nums) (apply '+ nums)) partitions)))
+      (let ((sums (mapcar 'sum partitions)))
         (apply '+ (seq-take (sort sums '>) 3))))))
 
-;; (day2 (read-file-contents "example/day1"))
+;; (part2 (read-file-contents "example/day1"))
 ;; 45000
 
-(day2 (read-file-contents "input/day1"))
+(part2 (read-file-contents "input/day1"))
 
 196804
 
