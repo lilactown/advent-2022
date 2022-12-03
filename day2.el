@@ -4,9 +4,6 @@
     (insert-file-contents filepath)
     (buffer-string)))
 
-;; associative data structures
-(require 'a)
-
 (defun judge-round (opponent choice)
   (+ (pcase choice
        (:rock 1)
@@ -26,16 +23,18 @@
 
 (defun part1 (file-contents)
   (let ((lines (split-string file-contents "\n"))
-        (str->choice (a-list "A" :rock
-                             "B" :paper
-                             "C" :scissor
-                             "X" :rock
-                             "Y" :paper
-                             "Z" :scissor)))
-    (apply '+ (mapcar (lambda (line)
-                        (let ((s (split-string line " ")))
-                          (judge-round (a-get str->choice (car s))
-                                       (a-get str->choice (cadr s))))) lines))))
+        (str->choice '(("A" . :rock)
+                       ("B" . :paper)
+                       ("C" . :scissor)
+                       ("X" . :rock)
+                       ("Y" . :paper)
+                       ("Z" . :scissor))))
+    (apply '+ (mapcar
+               (lambda (line)
+                 (let ((s (split-string line " ")))
+                   (judge-round
+                    (cdr (assoc (car s) str->choice))
+                    (cdr (assoc (cadr s) str->choice))))) lines))))
 
 (part1 (read-file-contents "example/day2"))
 
@@ -55,18 +54,20 @@
 
 (defun part2 (file-contents)
   (let ((lines (split-string file-contents "\n"))
-        (str->choice (a-list "A" :rock
-                             "B" :paper
-                             "C" :scissor))
-        (str->outcome (a-list "X" :lose
-                              "Y" :draw
-                              "Z" :win)))
-    (apply '+ (mapcar (lambda (line)
-                        (let ((s (split-string line " ")))
-                          (let ((opponent (a-get str->choice (car s)))
-                                (outcome (a-get str->outcome (cadr s))))
-                            (judge-round opponent
-                                         (choose opponent outcome)))))
+        (str->choice '(("A" . :rock)
+                       ("B" . :paper)
+                       ("C" . :scissor)))
+        (str->outcome '(("X" . :lose)
+                        ("Y" . :draw)
+                        ("Z" . :win))))
+    (apply '+ (mapcar
+               (lambda (line)
+                 (let ((s (split-string line " ")))
+                   (let ((opponent (cdr (assoc (car s) str->choice)))
+                         (outcome (cdr (assoc (cadr s) str->outcome))))
+                     (judge-round
+                      opponent
+                      (choose opponent outcome)))))
                       lines))))
 
 (part2 (read-file-contents "example/day2"))
