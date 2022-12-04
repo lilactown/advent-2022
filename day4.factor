@@ -1,5 +1,5 @@
-USING: io.encodings.utf8 io.files kernel prettyprint sequences
-splitting math.ranges math.parser ;
+USING: io.encodings.utf8 io.files kernel math.parser math.ranges
+prettyprint sequences sets splitting ;
 IN: day4
 
 "input/day4" utf8 file-lines ! read file into a sequence of lines
@@ -8,11 +8,15 @@ IN: day4
     [ string>number ] map ! each side of the range, convert to number
     first2 [a,b] ! convert numbers to range type
   ] map ! for each elf in the pair
-  dup ! create a duplicate..
+] map ! for each line
+dup ! duplicate for part 2...
+
+[ dup ! create a duplicate of the two ranges
   first2 subseq? ! see if first range is contained in second
   swap ! move copy of ranges to the front
   reverse first2 subseq? ! see if second range is contained in first
   or ! return true if either is true, false if neither
-] map ! for each line
-[ ] count
+] count ! count the results that pass
 . ! print the result
+
+[ first2 intersects? ] count .
