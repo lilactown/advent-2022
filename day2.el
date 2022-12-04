@@ -1,10 +1,14 @@
+;;; aoc22-day2 --- Day 2 of AoC 2022
+;;; Commentary:
+;;; Code:
+
 (defun read-file-contents (filepath)
   "Return FILEPATH content as string."
   (with-temp-buffer
     (insert-file-contents filepath)
     (buffer-string)))
 
-(defun judge-round (opponent choice)
+(defun day2/judge-round (opponent choice)
   (+ (pcase choice
        (:rock 1)
        (:paper 2)
@@ -21,7 +25,7 @@
        (`(:scissor, :paper) 0)
        (`(:scissor, :scissor) 3))))
 
-(defun part1 (file-contents)
+(defun day2/part1 (file-contents)
   (let ((lines (split-string file-contents "\n"))
         (str->choice '(("A" . :rock)
                        ("B" . :paper)
@@ -32,15 +36,15 @@
     (apply '+ (mapcar
                (lambda (line)
                  (let ((s (split-string line " ")))
-                   (judge-round
+                   (day2/judge-round
                     (cdr (assoc (car s) str->choice))
                     (cdr (assoc (cadr s) str->choice))))) lines))))
 
-(part1 (read-file-contents "example/day2"))
+(day2/part1 (read-file-contents "example/day2"))
 
-(part1 (read-file-contents "input/day2"))
+(day2/part1 (read-file-contents "input/day2"))
 
-(defun choose (opponent outcome)
+(defun day2/choose (opponent outcome)
   (pcase (list opponent outcome)
     (`(:rock, :draw) :rock)
     (`(:rock, :win) :paper)
@@ -52,7 +56,7 @@
     (`(:scissor, :win) :rock)
     (`(:scissor, :lose) :paper)))
 
-(defun part2 (file-contents)
+(defun day2/part2 (file-contents)
   (let ((lines (split-string file-contents "\n"))
         (str->choice '(("A" . :rock)
                        ("B" . :paper)
@@ -65,11 +69,13 @@
                  (let ((s (split-string line " ")))
                    (let ((opponent (cdr (assoc (car s) str->choice)))
                          (outcome (cdr (assoc (cadr s) str->outcome))))
-                     (judge-round
+                     (day2/judge-round
                       opponent
-                      (choose opponent outcome)))))
+                      (day2/choose opponent outcome)))))
                       lines))))
 
-(part2 (read-file-contents "example/day2"))
+(day2/part2 (read-file-contents "example/day2"))
 
-(part2 (read-file-contents "input/day2"))
+(day2/part2 (read-file-contents "input/day2"))
+
+;;; day2.el ends here.
