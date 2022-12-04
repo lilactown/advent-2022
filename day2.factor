@@ -17,9 +17,6 @@ SYMBOLS: rock paper scissor draw win lose ;
       { { scissor scissor } [ 6 ] }
     } case ;
 
-: line>round ( line -- round )
- ;
-
 ! Part 1
 "input/day2" utf8 file-lines ! read file into a sequence of lines
 [ " " split ! split the line by space
