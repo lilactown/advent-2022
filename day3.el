@@ -1,3 +1,7 @@
+;;; aoc22/day3 --- Day 3 of AoC 2022
+;;; Commentary:
+;;; Code:
+
 (defun read-file-contents (filepath)
   "Return FILEPATH content as string."
   (with-temp-buffer
@@ -13,10 +17,10 @@
       (list left right))))
 
 (require 'dash) ;; thread-last
-(require 'cl-lib) ;; cl-intersection
+(require 'cl-lib) ;; cl-mapcar / cl-intersection
 
-(defun part1 (file-contents)
-  (let ((char->priority (mapcar*
+(defun day3/part1 (file-contents)
+  (let ((char->priority (cl-mapcar
                          'cons
                          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                          (number-sequence 1 52))))
@@ -33,12 +37,12 @@
                (seq-uniq (cadr parts))))))
          (apply '+))))
 
-(part1 (read-file-contents "example/day3"))
+(day3/part1 (read-file-contents "example/day3"))
 
-(part1 (read-file-contents "input/day3"))
+(day3/part1 (read-file-contents "input/day3"))
 
-(defun part2 (file-contents)
-  (let ((char->priority (mapcar*
+(defun day3/part2 (file-contents)
+  (let ((char->priority (cl-mapcar
                          'cons
                          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                          (number-sequence 1 52))))
@@ -58,6 +62,8 @@
               (caddr parts)))))
          (apply '+))))
 
-(part2 (read-file-contents "example/day3"))
+(day3/part2 (read-file-contents "example/day3"))
 
-(part2 (read-file-contents "input/day3"))
+(day3/part2 (read-file-contents "input/day3"))
+
+;;; day3.el ends here.
