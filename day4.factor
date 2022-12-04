@@ -11,10 +11,9 @@ IN: day4
 ] map ! for each line
 dup ! duplicate for part 2...
 
-[ dup ! create a duplicate of the two ranges
-  first2 subseq? ! see if first range is contained in second
-  swap ! move copy of ranges to the front
-  reverse first2 subseq? ! see if second range is contained in first
+[ [ first2 subseq? ] ! see if first range is contained in second
+  [ reverse first2 subseq? ] ! see if second range is contained in first
+  bi ! apply 2 quotations to the line, putting their values on the stack
   or ! return true if either is true, false if neither
 ] count ! count the results that pass
 . ! print the result
