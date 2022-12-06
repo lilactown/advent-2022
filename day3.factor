@@ -12,22 +12,21 @@ set-global ! set this value as a global var `priorities`
 
 
 "input/day3" utf8 file-lines ! read file into a sequence of lines
-dup ! duplicate for part 2
 
 ! part 1
-[ dup length 2 / cut ! split at the midpoint of the string
-  intersect ! find the one letter in common between the two halves
-  first priorities get-global at ! convert letter codepoint to priority
-] map
-0 [ + ] reduce ! add up all priorities
-.
-
+[ [ dup length 2 / cut ! split at the midpoint of the string
+    intersect ! find the one letter in common between the two halves
+    first priorities get-global at ! convert letter codepoint to priority
+  ] map
+  0 [ + ] reduce ! add up all priorities
+  . ]
 
 ! part 2
-3 group ! group the lines into clumps of 3
-[ first3 ! put the 3 strings on the stack
-  intersect intersect ! find their intesection
-  first priorities get-global at ! map the remaining letter to its priority
-] map
-0 [ + ] reduce ! add up the priorities
-.
+[ 3 group ! group the lines into clumps of 3
+  [ first3 ! put the 3 strings on the stack
+    intersect intersect ! find their intesection
+    first priorities get-global at ! map the remaining letter to its priority
+  ] map
+  0 [ + ] reduce ! add up the priorities
+  . ]
+bi
