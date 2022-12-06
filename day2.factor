@@ -17,8 +17,10 @@ SYMBOLS: rock paper scissor draw win lose ;
       { { scissor scissor } [ 6 ] }
     } case ;
 
-! Part 1
 "input/day2" utf8 file-lines ! read file into a sequence of lines
+dup ! duplicate for part 2
+
+! Part 1
 [ " " split ! split the line by space
   [ { { "A" [ rock ] }
       { "B" [ paper ] }
@@ -32,8 +34,7 @@ SYMBOLS: rock paper scissor draw win lose ;
 0 [ + ] reduce ! compute the sum of all games
 . ! print the result
 
-! ! Part 2
-"input/day2" utf8 file-lines ! read file into a sequence of lines
+! Part 2
 [ { { "A X" [ { rock scissor } ] }
     { "A Y" [ { rock rock } ] }
     { "A Z" [ { rock paper } ] }
