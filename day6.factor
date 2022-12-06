@@ -5,8 +5,8 @@ IN: day6
 :: solve ( str n -- m )
     str n clump ! all groupings of n many letters
     [ all-unique? ] find ! first elt whose set elements are unique
-    drop ! ^ pushes the elt and index, drop the elt
-    n + ; ! add n to it to get the starting index
+    drop ! find pushes the elt and index, drop the elt
+    n + ; ! add n to the index of the group to get the starting index
 
 "input/day6" utf8 file-contents
 
