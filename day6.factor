@@ -4,7 +4,7 @@ IN: day6
 
 :: solve ( str n -- m )
     str n clump ! all groupings of n many letters
-    [ members length n = ] find ! first elt whose set elements are unique
+    [ all-unique? ] find ! first elt whose set elements are unique
     drop ! ^ pushes the elt and index, drop the elt
     n + ; ! add n to it to get the starting index
 
